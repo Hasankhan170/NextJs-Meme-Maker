@@ -7,6 +7,7 @@ import { useRef, useState } from "react";
 interface SingleMeme {
     id: string;
     url: string;
+    box_count : number
 }
 
 const Meme = ({searchParams} : {searchParams : SingleMeme}) => {

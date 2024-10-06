@@ -16,7 +16,7 @@ const page = async ()=>{
       <h1 className="text-center text-3xl font-bold m-5">Meme Maker</h1>
       <div className="p-3 flex flex-wrap justify-center gap-5">
         {
-          response ? response.memes.map((item: { name: string; id: string; url: string }) => {
+          response ? response.memes.map((item: { name: string; id: string; url: string; box_count: number }) => {
             return (
               <div key={item.id} className="flex flex-col items-center">
                 <Image 
@@ -28,7 +28,7 @@ const page = async ()=>{
                 />
               <Link className="w-full" href={{
          pathname: '/meme',
-         query: { url: item.url , id:item.id },
+         query: { url: item.url , id:item.id ,box_count:item.box_count },
         }}>
       <button className="mt-2 w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Meme Generate</button>
           </Link>
