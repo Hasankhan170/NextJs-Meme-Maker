@@ -31,9 +31,13 @@ const page = async ()=>{
                   width={200} 
                   height={200} 
                 />
-                <button 
-                  className="mt-2 w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"><Link href={}>Meme Generate</Link></button>
-              </div>
+              <Link href={{
+         pathname: '/meme',
+         query: { url: item.url , id:item.id },
+        }}>
+      <button className="mt-2 w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Meme Generate</button>
+          </Link>
+      </div>
             );
           }) : <p>No data Found...</p>
         }
