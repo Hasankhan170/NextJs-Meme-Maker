@@ -9,13 +9,8 @@ const page = async ()=>{
   .then((response)=>response.json())
   .then((response)=>response.data)
   .catch((err)=>console.log(err))
-  console.log(response);
-  
-  
   
  
-  
-
   return (
     <>
       <h1 className="text-center text-3xl font-bold m-5">Meme Maker</h1>
