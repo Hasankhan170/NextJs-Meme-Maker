@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 
 interface SingleMeme {
@@ -9,21 +9,37 @@ interface SingleMeme {
     url: string;
 }
 
-const Meme = async({searchParams} : {searchParams : SingleMeme}) => {
+const Meme = ({searchParams} : {searchParams : SingleMeme}) => {
 
   const text1 = useRef<HTMLInputElement>(null)
   const text2 = useRef<HTMLInputElement>(null)
   const text3 = useRef<HTMLInputElement>(null)
   const text4 = useRef<HTMLInputElement>(null)
+  const [submit,setSubmit] = useState('submit')
+  const [memeUrl, setMemeUrl] = useState<string | null>(null); 
 
 
   const memeForm = async(event:React.SyntheticEvent)=>{
     event.preventDefault()
-    console.log(text1.current?.value);
-    console.log(text2.current?.value);
-    console.log(text3.current?.value);
-    console.log(text4.current?.value);
+    if (!text1.current?.value || !text2.current?.value || !text3.current?.value || !text4.current?.value) {
+      alert('Please enter all the text fields');
+      return;
+    }
+    setSubmit('loading...')
     
+    const response = await fetch(`https://api.imgflip.com/caption_image?template_id=${searchParams.id}&username=Hasankhan170 &password=Hasan123.&text0=${text1.current?.value}&text1=${text2.current?.value}&text2=${text3.current?.value}&text3=${text4.current?.value}`,{
+       method:'POST'
+      })
+
+      const data = await response.json()
+      if(data.success){
+        setMemeUrl(data.data.url);
+      }else{
+        alert('Failed to generate meme');
+        setMemeUrl(null);
+      }
+      console.log(data);
+      setSubmit('Generate');
   }
   return (
     <>
@@ -69,6 +85,18 @@ const Meme = async({searchParams} : {searchParams : SingleMeme}) => {
           Generate
         </button>
       </form>
+      {memeUrl && (
+          <div className="mt-6">
+            <h2 className="text-xl font-semibold">Generated Meme:</h2>
+            <Image 
+              src={memeUrl} 
+              alt="Generated meme" 
+              width={400} 
+              height={200} 
+              className="rounded-lg shadow-lg mt-2"
+            />
+          </div>
+        )}
     </div>
     </>
   )
