@@ -31,7 +31,7 @@ const page = async ()=>{
                   width={200} 
                   height={200} 
                 />
-              <Link href={{
+              <Link className="w-full" href={{
          pathname: '/meme',
          query: { url: item.url , id:item.id },
         }}>
